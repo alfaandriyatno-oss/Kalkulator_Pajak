@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kalkulator Pajak Indonesia 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7f9;--card:#fff;--tx:#1b2330;--mu:#5d6878;--bd:#dde2ea;--ac:#0b6e4f;--ac2:#e3f4ec;--wa:#fff4dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151c;--card:#19212b;--tx:#e8edf3;--mu:#97a3b3;--bd:#2b3644;--ac:#3ecf9a;--ac2:#14352a;--wa:#3a3015}}
+:root[data-theme="dark"]{--bg:#10151c;--card:#19212b;--tx:#e8edf3;--mu:#97a3b3;--bd:#2b3644;--ac:#3ecf9a;--ac2:#14352a;--wa:#3a3015}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:.2em 0}.sub{color:var(--mu);margin:0 0 12px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+nav button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 12px;border-radius:999px;cursor:pointer;font:inherit}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+section{display:none;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}
+section.on{display:block}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;font-size:.85rem;color:var(--mu)}
+input,select{width:100%;margin-top:4px;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+input[type=checkbox]{width:auto;margin-right:6px}
+.ck{display:flex;align-items:center;color:var(--tx)}
+table{width:100%;border-collapse:collapse;margin-top:14px}
+td{padding:8px 6px;border-bottom:1px solid var(--bd)}td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hi td{background:var(--ac2);font-weight:700;color:var(--ac)}
+.note{background:var(--wa);border-radius:8px;padding:10px;margin-top:12px;font-size:.85rem}
+footer{color:var(--mu);font-size:.8rem;margin-top:16px}
+.hero{background:linear-gradient(135deg,#0b6e4f,#1e5fd6);color:#fff;border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:0 8px 24px rgba(11,110,79,.25)}.hero h1{font-size:1.7rem;margin:0}.hero p{margin:6px 0 0;opacity:.9}
+nav{position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}nav button{box-shadow:0 1px 3px rgba(0,0,0,.08);transition:.15s}nav button:hover{transform:translateY(-1px)}
+section{box-shadow:0 4px 18px rgba(0,0,0,.06);border-radius:16px}
+tr.hi td{font-size:1.08rem;padding:11px 8px}tr.hi td:first-child{border-radius:8px 0 0 8px}tr.hi td:last-child{border-radius:0 8px 8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.card{border:1px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer;background:var(--bg);transition:.15s}.card:hover{border-color:var(--ac);transform:translateY(-2px)}.card b{display:block;margin:4px 0}.card span{font-size:1.6rem}.card p{margin:0;color:var(--mu);font-size:.85rem}
+.ex{border:1px solid var(--bd);border-radius:12px;margin-bottom:14px;background:var(--bg)}.ex summary{cursor:pointer;padding:12px;font-weight:700;color:var(--ac)}.ex .eg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;padding:0 12px 12px}.ex .eg div{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;font-size:.88rem}.ex h4{margin:0 0 4px;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mu)}
+h2{margin:.2em 0 .6em;font-size:1.15rem}
+.bt{border:0;background:var(--ac);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit;margin:2px 4px 2px 0}.bt.s{background:var(--mu)}.bt.d{background:#c0392b}
+pre{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:10px;overflow-x:auto;font-size:.8rem}
+.rw{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid var(--bd);padding:8px 0}.rw small{color:var(--mu)}
+.tw{overflow-x:auto}.tw table{min-width:1000px}.tw th{font-size:.75rem;color:var(--mu);text-align:left;padding:4px}.tw td{padding:4px}.tw input,.tw select{min-width:92px;margin:0}.tw input[type=checkbox]{min-width:0}
+textarea{width:100%;min-height:70px;margin-top:4px;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+</style></head><body><main>
+<div class="hero"><h1>🧾 Kalkulator &amp; Panduan Pajak Indonesia</h1><p>Hitung 7 jenis pajak sekaligus pelajari dasar aturan, tarif, dan tenggat waktunya · tahun pajak 2026 · hasil berupa estimasi</p></div>
+<nav id="nav"></nav>
+
+<section id="home"></section>
+<section id="p21" oninput="calc()">
+<div class="g">
+<label>Gaji pokok / bulan<input type="number" id="g" value="10000000"></label>
+<label>Tunjangan tetap & tidak tetap / bulan<input type="number" id="tj" value="1000000"></label>
+<label>Premi asuransi dibayar pemberi kerja (JKK, JKM, BPJS Kes) / bulan<input type="number" id="pr" value="200000"></label>
+<label>Iuran pensiun/JHT/JP ditanggung karyawan / bulan<input type="number" id="ip" value="300000"></label>
+<label>THR / bonus setahun<input type="number" id="bn" value="10000000"></label>
+<label>Status PTKP<select id="st"></select></label>
+</div>
+<label class="ck" style="margin-top:10px"><input type="checkbox" id="np">Tidak memiliki NPWP/NIK terdaftar (tarif +20%)</label>
+<div id="o21"></div></section>
+
+<section id="pop" oninput="calc()">
+<div class="g">
+<label>Penghasilan neto setahun<input type="number" id="nt" value="250000000"></label>
+<label>Status PTKP<select id="st2"></select></label></div>
+<div id="oop"></div></section>
+
+<section id="p23" oninput="calc()">
+<div class="g">
+<label>Penghasilan bruto (tanpa PPN)<input type="number" id="d23" value="20000000"></label>
+<label>Jenis penghasilan<select id="j23">
+<option value="15">Dividen, bunga, royalti, hadiah/penghargaan (15%)</option>
+<option value="2" selected>Jasa teknik, manajemen, konsultan, dll. (2%)</option>
+<option value="2">Sewa harta selain tanah/bangunan (2%)</option></select></label></div>
+<label class="ck" style="margin-top:10px"><input type="checkbox" id="n23">Penerima tidak ber-NPWP/NIK terdaftar (tarif 2× lipat)</label>
+<div id="o23"></div></section>
+
+<section id="p42" oninput="calc()">
+<div class="g">
+<label>Nilai bruto transaksi<input type="number" id="d42" value="100000000"></label>
+<label>Objek PPh Final Pasal 4(2)<select id="j42">
+<option value="10">Sewa tanah dan/atau bangunan (10%)</option>
+<option value="2.5">Pengalihan hak atas tanah/bangunan (2,5%)</option>
+<option value="1">Pengalihan rumah/rusun sederhana (1%)</option>
+<option value="1.75">Konstruksi - pelaksana kualifikasi kecil (1,75%)</option>
+<option value="2.65">Konstruksi - pelaksana kualifikasi menengah/besar (2,65%)</option>
+<option value="4">Konstruksi - pelaksana tanpa kualifikasi (4%)</option>
+<option value="3.5">Konstruksi - perencana/pengawas kualifikasi (3,5%)</option>
+<option value="6">Konstruksi - perencana/pengawas tanpa kualifikasi (6%)</option>
+<option value="20">Bunga deposito/tabungan (20%)</option></select></label></div>
+<div id="o42"></div></section>
+
+<section id="pum" oninput="calc()">
+<div class="g">
+<label>Omzet bulan ini<input type="number" id="om" value="60000000"></label>
+<label>Omzet kumulatif tahun ini (sebelum bulan ini)<input type="number" id="oc" value="450000000"></label>
+<label>Jenis wajib pajak<select id="jw"><option value="op">Orang pribadi (omzet Rp500 juta/tahun tidak kena pajak)</option><option value="bd">Badan (CV, PT, koperasi, dll.)</option></select></label></div>
+<div id="oum"></div></section>
+
+<section id="ppn" oninput="calc()">
+<div class="g">
+<label>Harga<input type="number" id="hg" value="10000000"></label>
+<label>Jenis harga<select id="mh"><option value="ex">Belum termasuk PPN</option><option value="in">Sudah termasuk PPN</option></select></label>
+<label>Jenis BKP/JKP<select id="jb"><option value="n">Non-mewah (12% × DPP 11/12 = efektif 11%)</option><option value="m">Barang mewah (12% × DPP penuh)</option></select></label>
+<label>Tarif PPnBM % (jika barang mewah)<input type="number" id="pb" value="0"></label></div>
+<div id="oppn"></div></section>
+
+<section id="pbd" oninput="calc()">
+<div class="g">
+<label>Peredaran bruto setahun<input type="number" id="ob" value="3000000000"></label>
+<label>Penghasilan kena pajak (laba fiskal) setahun<input type="number" id="lf" value="400000000"></label></div>
+<div id="obd"></div></section>
+
+<section id="pms"><h2>👥 PPh 21 Massal (banyak karyawan)</h2>
+<details class="ex" open><summary>📖 Penjelasan</summary><div class="eg"><div><h4>Kegunaan</h4>Menghitung PPh 21 seluruh karyawan sekaligus memakai metode TER untuk Jan–Nov dan tarif Pasal 17 untuk Masa Desember, lengkap dengan total yang harus disetor perusahaan.</div><div><h4>Cara pakai</h4>Isi atau ubah tabel, tambah baris, atau tempel data dari Excel di kotak impor. Klik Simpan agar daftar karyawan tersimpan di browser ini, dan Ekspor untuk mengunduh CSV yang bisa dibuka di Excel.</div><div><h4>Catatan</h4>Asumsi gaji tetap tiap bulan dan THR/bonus dihitung di perhitungan tahunan. Hasil adalah estimasi, cocokkan dengan e-Bupot.</div></div></details>
+<div class="note" style="margin:0 0 12px">📤 <b>Tidak perlu input satu per satu.</b> Unduh template Excel, isi data semua karyawan, lalu unggah di sini. Hasil perhitungan bisa diekspor kembali ke Excel.<br><button class="bt s" onclick="tplXL()">⬇ Template Excel</button><label class="bt" style="display:inline-block;cursor:pointer">⬆ Unggah Excel/CSV<input type="file" accept=".xlsx,.xls,.csv" onchange="fileXL(this)" hidden></label></div>
+<div class="tw"><table><thead><tr><th>Nama</th><th>Status PTKP</th><th>Gaji pokok/bln</th><th>Tunjangan/bln</th><th>Premi pemberi kerja/bln</th><th>Iuran pensiun/bln</th><th>THR/bonus setahun</th><th>Tanpa NPWP</th><th>TER · tarif</th><th>PPh/bln</th><th>PPh Des</th><th></th></tr></thead><tbody id="emt"></tbody></table></div>
+<p><button class="bt" onclick="EM.push({nama:'Karyawan '+(EM.length+1),status:'TK/0',gaji:0,tunjangan:0,premi:0,iuran:0,bonus:0,np:false});rend()">+ Tambah karyawan</button><button class="bt" onclick="expXL()">⬇ Ekspor Excel (.xlsx)</button><button class="bt s" onclick="expEM()">⬇ CSV</button><button class="bt" onclick="simpanEM()">💾 Simpan di browser</button><button class="bt s" onclick="muatEM()">📂 Muat data tersimpan</button></p>
+<p id="emm"></p><div id="emsum"></div>
+<details class="ex" style="margin-top:14px"><summary>📥 Impor dari Excel / teks</summary><div style="padding:0 12px 12px"><p>Satu karyawan per baris dengan kolom: nama, status, gaji, tunjangan, premi, iuran, bonus, tanpa NPWP (1 atau 0). Pisahkan dengan tab (tempel dari Excel), titik koma, atau koma.</p><textarea id="imp" placeholder="Budi;K/1;12000000;1500000;250000;300000;12000000;0"></textarea><button class="bt" onclick="impor()">Impor</button></div></details>
+</section>
+<footer><b>Dasar aturan:</b> UU PPh (diubah UU HPP No. 7/2021): tarif Pasal 17, PP 55/2022 (PPh Final UMKM), PP 23/2018 jo. PP 55/2022; PP 58/2023 &amp; PMK 168/2023 (TER PPh 21); PMK 101/2016 (PTKP); PMK 131/2024 &amp; PMK 11/2025 (PPN, DPP nilai lain). Kalkulator ini alat bantu, bukan nasihat pajak. Cocokkan hasil dengan lampiran peraturan resmi/DJP, dan konsultasikan ke konsultan pajak untuk keputusan penting. Aturan dapat berubah.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id), v=id=>+$(id).value||0;
+const rp=n=>"Rp"+Math.round(n).toLocaleString("id-ID");
+const PT={"TK/0":54,"TK/1":58.5,"TK/2":63,"TK/3":67.5,"K/0":58.5,"K/1":63,"K/2":67.5,"K/3":72};
+const KAT={"TK/0":"A","TK/1":"A","K/0":"A","TK/2":"B","TK/3":"B","K/1":"B","K/2":"B","K/3":"C"};
+const T={
+A:"5400000:0,5650000:.25,5950000:.5,6300000:.75,6750000:1,7500000:1.25,8550000:1.5,9650000:1.75,10050000:2,10350000:2.25,10700000:2.5,11050000:3,11600000:3.5,12500000:4,13750000:5,15100000:6,16950000:7,19750000:8,24150000:9,26450000:10,28000000:11,30050000:12,32400000:13,35400000:14,39100000:15,43850000:16,47800000:17,51400000:18,56300000:19,62200000:20,68600000:21,77500000:22,89000000:23,103000000:24,125000000:25,157000000:26,206000000:27,337000000:28,454000000:29,550000000:30,695000000:31,910000000:32,1400000000:33",
+B:"6200000:0,6500000:.25,6850000:.5,7300000:.75,9200000:1,10750000:1.5,11250000:2,11600000:2.5,12600000:3,13600000:4,14950000:5,16400000:6,18450000:7,21850000:8,26000000:9,27700000:10,29350000:11,31450000:12,33950000:13,37100000:14,41100000:15,45800000:16,49500000:17,53800000:18,58500000:19,64000000:20,71000000:21,80000000:22,93000000:23,109000000:24,129000000:25,163000000:26,211000000:27,374000000:28,459000000:29,555000000:30,704000000:31,957000000:32,1405000000:33",
+C:"6600000:0,6950000:.25,7350000:.5,7800000:.75,8850000:1,9800000:1.25,10950000:1.5,11200000:1.75,12050000:2,12950000:3,14150000:4,15550000:5,17050000:6,19500000:7,22700000:8,26600000:9,28100000:10,30100000:11,32600000:12,35400000:13,38900000:14,43000000:15,47400000:16,51200000:17,55800000:18,60400000:19,66700000:20,74500000:21,83200000:22,95600000:23,110000000:24,134000000:25,169000000:26,221000000:27,390000000:28,463000000:29,561000000:30,709000000:31,965000000:32,1419000000:33"};
+function ter(k,b){for(const p of T[k].split(",")){const[l,r]=p.split(":");if(b<=+l)return +r}return 34}
+function p17(pkp){pkp=Math.floor(Math.max(pkp,0)/1000)*1000;let t=0,pr=0;
+for(const[l,r]of[[6e7,.05],[25e7,.15],[5e8,.25],[5e9,.3],[Infinity,.35]]){if(pkp>pr)t+=(Math.min(pkp,l)-pr)*r;pr=l}return[pkp,t]}
+function tb(rows){return"<table>"+rows.map((r,i)=>`<tr${r[2]?' class="hi"':""}><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")+"</table>"}
+const pct=x=>(+x.toFixed(2)).toString().replace(".",",")+"%";
+
+function calc(){
+// PPh 21
+let s=$("st").value,k=KAT[s],sur=$("np").checked?1.2:1;
+let bm=v("g")+v("tj")+v("pr"),tr=ter(k,bm),pm=bm*tr/100*sur;
+let bt=bm*12+v("bn"),bj=Math.min(bt*.05,6e6),ipt=v("ip")*12,nt=bt-bj-ipt,[pkp,pt]=p17(nt-PT[s]*1e6);pt*=sur;
+let des=pt-pm*11;
+$("o21").innerHTML=tb([["Kategori TER (status "+s+")","TER "+k],["Penghasilan bruto bulanan",rp(bm)],["Tarif TER",pct(tr)],["PPh 21 Masa Jan–Nov (per bulan)",rp(pm),1],
+["Penghasilan bruto setahun (incl. THR/bonus)",rp(bt)],["Biaya jabatan (5%, maks Rp6 juta/tahun)",rp(bj)],["Iuran pensiun/JHT/JP setahun",rp(ipt)],["Penghasilan neto setahun",rp(nt)],["PTKP",rp(PT[s]*1e6)],["PKP (dibulatkan ribuan)",rp(pkp)],["PPh 21 terutang setahun (Pasal 17)",rp(pt)],["PPh 21 Masa Desember (true-up)",rp(des),1]])+
+'<div class="note">Simulasi mengasumsikan penghasilan bulanan tetap tiap bulan; THR/bonus diperhitungkan di perhitungan tahunan. Pada praktiknya, pemotongan di bulan bonus memakai TER atas total penghasilan bulan itu. Bila Desember negatif, terjadi kelebihan potong.</div>';
+// PPh OP
+s=$("st2").value;let[pk,px]=p17(v("nt")-PT[s]*1e6);
+$("oop").innerHTML=tb([["PTKP",rp(PT[s]*1e6)],["PKP",rp(pk)],["PPh terutang (tarif Pasal 17)",rp(px),1],["Tarif efektif",pct(v("nt")?px/v("nt")*100:0)]])+'<div class="note">Lapisan: 5% s.d. Rp60 juta · 15% s.d. Rp250 juta · 25% s.d. Rp500 juta · 30% s.d. Rp5 miliar · 35% di atasnya.</div>';
+// PPh 23
+let r=+$("j23").value*($("n23").checked?2:1),p23=v("d23")*r/100;
+$("o23").innerHTML=tb([["Dasar pemotongan",rp(v("d23"))],["Tarif",pct(r)],["PPh 23 dipotong",rp(p23),1],["Diterima bersih",rp(v("d23")-p23)]]);
+// PPh 4(2)
+let r4=+$("j42").value,p4=v("d42")*r4/100;
+$("o42").innerHTML=tb([["Nilai bruto",rp(v("d42"))],["Tarif final",pct(r4)],["PPh Final Pasal 4(2)",rp(p4),1]]);
+// UMKM
+let om=v("om"),oc=v("oc"),bs=$("jw").value=="op"?Math.max(0,oc+om-5e8)-Math.max(0,oc-5e8):om;
+$("oum").innerHTML=tb([["Omzet bulan ini",rp(om)],["Omzet kumulatif s.d. bulan ini",rp(oc+om)],["Omzet kena pajak bulan ini",rp(bs)],["PPh Final UMKM 0,5%",rp(bs*.005),1]])+'<div class="note">Hanya untuk omzet bruto maksimal Rp4,8 miliar/tahun. Jangka waktu pemanfaatan tarif final: OP 7 tahun, badan PT 4 tahun, CV/koperasi/firma 4 tahun (sejak terdaftar).</div>';
+// PPN
+let h=v("hg"),mw=$("jb").value=="m",rt=mw?1.12:1.11,dasar=$("mh").value=="in"?h/rt:h,
+dpp=mw?dasar:dasar*11/12,ppn=dpp*.12,ppnbm=mw?dasar*v("pb")/100:0;
+$("oppn").innerHTML=tb([["Harga jual (sebelum PPN)",rp(dasar)],["DPP"+(mw?" (harga jual)":" nilai lain (11/12)"),rp(dpp)],["PPN 12%",rp(ppn),1],["Tarif efektif",pct(ppn/dasar*100||0)],["PPnBM",rp(ppnbm)],["Total dibayar",rp(dasar+ppn+ppnbm),1]])+'<div class="note">Tarif PPN undang-undang 12%; untuk barang/jasa non-mewah memakai DPP nilai lain 11/12 sehingga beban efektif 11%. Beberapa objek (mis. yang diatur PMK 11/2025 atau PPN besaran tertentu) dihitung berbeda. Input PPnBM hanya berlaku bila barang mewah.</div>';
+// Badan
+let ob=v("ob"),lf=v("lf"),tx;
+if(ob<=4.8e9)tx=lf*.11;else if(ob<=5e10)tx=lf*(4.8e9/ob)*.11+lf*(1-4.8e9/ob)*.22;else tx=lf*.22;
+if(ob<=4.8e9)tx=lf*.11;
+$("obd").innerHTML=tb([["Peredaran bruto",rp(ob)],["PKP",rp(lf)],["Fasilitas Pasal 31E (diskon 50%)",ob<=5e10?"Ya":"Tidak"],["PPh Badan terutang setahun",rp(tx),1],["Angsuran PPh 25 per bulan (estimasi)",rp(tx/12)]])+'<div class="note">Tarif umum 22%. Fasilitas 31E: omzet ≤ Rp4,8 M tarif 11%; Rp4,8–50 M diskon 50% hanya atas bagian PKP proporsional omzet Rp4,8 M. Wajib pajak dengan omzet ≤ Rp4,8 M juga dapat memilih PPh Final 0,5%.</div>';
+}
+const tabs=[["home","🏠 Beranda"],["p21","PPh 21 Karyawan"],["pop","PPh OP (Ps. 17)"],["p23","PPh 23"],["p42","PPh Final 4(2)"],["pum","PPh Final UMKM"],["ppn","PPN"],["pbd","PPh Badan"],["pms","👥 PPh 21 Massal"]];
+$("nav").innerHTML=tabs.map(([i,n],x)=>`<button data-i="${i}" class="${x?"":"on"}">${n}</button>`).join("");
+document.querySelectorAll("main>section")[0].classList.add("on");
+$("nav").onclick=e=>{const i=e.target.dataset.i;if(!i)return;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.i==i));document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("on",s.id==i))};
+const op=Object.keys(PT).map(k=>`<option>${k}</option>`).join("");$("st").innerHTML=op;$("st2").innerHTML=op;
+const E={
+ p21:{i:"💼",t:"PPh 21 (Karyawan)",r:"Pajak atas gaji, THR, bonus, dan honor yang dipotong pemberi kerja.",a:"Pajak penghasilan atas gaji, upah, tunjangan, THR, bonus, honorarium, dan imbalan lain terkait pekerjaan. Dipotong oleh pemberi kerja, lalu disetor ke negara atas nama karyawan.",s:"Pemberi kerja/bendahara wajib memotong. Karyawan tetap, pegawai tidak tetap, pensiunan, dan penerima honor termasuk subjeknya.",f:"Masa Jan–Nov: tarif TER (kategori A/B/C) × bruto bulanan. Masa Desember: hitung ulang setahun dengan tarif Pasal 17 setelah PTKP. Tanpa NPWP: +20%.",d:"Setor: tgl 10 bulan berikutnya. Lapor SPT Masa: tgl 20 bulan berikutnya.",b:"UU PPh, UU HPP, PP 58/2023, PMK 168/2023."},
+ pop:{i:"👤",t:"PPh Orang Pribadi (Pasal 17)",r:"Tarif progresif atas penghasilan neto setahun setelah PTKP.",a:"Pajak atas seluruh penghasilan orang pribadi dalam satu tahun, dihitung di SPT Tahunan. Semakin besar penghasilan kena pajak, semakin tinggi tarif di lapisan atasnya.",s:"Setiap orang pribadi yang berpenghasilan di atas PTKP (karyawan, pekerja bebas, pemilik usaha non-final).",f:"5% (s.d. Rp60 jt), 15% (s.d. Rp250 jt), 25% (s.d. Rp500 jt), 30% (s.d. Rp5 M), 35% (di atas Rp5 M). PTKP TK/0 Rp54 jt, +Rp4,5 jt per tanggungan/kawin.",d:"Lapor SPT Tahunan OP: paling lambat 31 Maret tahun berikutnya.",b:"Pasal 17 UU PPh (diubah UU HPP), PMK 101/2016."},
+ p23:{i:"🤝",t:"PPh 23",r:"Dipotong atas jasa, sewa harta, dividen, bunga, dan royalti.",a:"Pajak yang dipotong pembayar atas penghasilan modal, jasa, dan hadiah yang dibayarkan kepada wajib pajak dalam negeri. Pemotong menerbitkan bukti potong.",s:"Badan atau instansi pemerintah pembayar; penerima bisa badan maupun orang pribadi.",f:"15% untuk dividen, bunga, royalti, hadiah. 2% untuk sewa harta (selain tanah/bangunan) dan jasa tertentu. Tanpa NPWP: 2× lipat. Dasar: jumlah bruto tanpa PPN.",d:"Setor: tgl 10 bulan berikutnya. Lapor: tgl 20.",b:"Pasal 23 UU PPh, PMK 141/2015."},
+ p42:{i:"🏗️",t:"PPh Final Pasal 4(2)",r:"Pajak final: sewa tanah/bangunan, konstruksi, jual tanah, bunga.",a:"Pajak atas penghasilan tertentu yang dikenakan tarif tersendiri dan bersifat final, sehingga tidak digabung ke penghasilan di SPT Tahunan (tetap dilaporkan).",s:"Penerima penghasilan dari objek terkait; dipotong pembayar atau disetor sendiri.",f:"Sewa tanah/bangunan 10%; konstruksi 1,75%–6% menurut kualifikasi; jual tanah/bangunan 2,5% (rumah sederhana 1%); bunga deposito 20%.",d:"Setor: tgl 10 bulan berikutnya (atau saat transaksi untuk jual tanah/bangunan).",b:"PP 34/2016, PP 9/2022, PP 5/2002 dan peraturan turunannya."},
+ pum:{i:"🏪",t:"PPh Final UMKM",r:"0,5% dari omzet bruto untuk usaha beromzet s.d. Rp4,8 miliar.",a:"Skema sederhana: pajak dihitung dari omzet, bukan laba, sehingga usaha rugi tetap membayar. Orang pribadi mendapat omzet Rp500 juta/tahun yang tidak dikenai pajak.",s:"Orang pribadi, CV, firma, koperasi, PT dengan omzet tidak lebih dari Rp4,8 M per tahun.",f:"0,5% × omzet bruto sebulan. Batas waktu: OP 7 tahun, PT 3 tahun, CV/firma/koperasi 4 tahun.",d:"Setor: tgl 15 bulan berikutnya.",b:"PP 55/2022, UU HPP."},
+ ppn:{i:"🛒",t:"PPN",r:"Pajak atas penyerahan barang/jasa kena pajak, ditanggung konsumen.",a:"Pajak konsumsi yang dipungut penjual (PKP) pada setiap transaksi. PPN keluaran dikurangi PPN masukan (kredit pajak), selisihnya disetor.",s:"Pengusaha Kena Pajak (PKP), umumnya omzet di atas Rp4,8 M, atau yang memilih dikukuhkan.",f:"Tarif UU 12%. Barang mewah: 12% × harga penuh. Non-mewah: 12% × DPP 11/12 = efektif 11%.",d:"Setor dan lapor SPT Masa PPN: paling lambat akhir bulan berikutnya.",b:"UU PPN, UU HPP, PMK 131/2024, PMK 11/2025."},
+ pbd:{i:"🏢",t:"PPh Badan",r:"Pajak atas laba PT/CV; tarif 22% dengan diskon untuk UMKM.",a:"Pajak penghasilan badan atas laba fiskal setahun (laba akuntansi dikoreksi aturan pajak). Selama tahun berjalan membayar angsuran PPh 25 tiap bulan.",s:"PT, CV, koperasi, yayasan, BUT, dan badan lain yang berpenghasilan.",f:"22% flat. Fasilitas Pasal 31E: omzet ≤ Rp4,8 M tarif 11%; Rp4,8–50 M diskon 50% atas bagian PKP proporsional. Perusahaan terbuka berpotensi tarif lebih rendah.",d:"PPh 25: setor tgl 15 bulan berikutnya. SPT Tahunan Badan: 30 April.",b:"Pasal 17 dan 31E UU PPh, UU HPP."}};
+for(const id in E){const e=E[id],s=$(id);s.insertAdjacentHTML("afterbegin",`<h2>${e.i} ${e.t}</h2><details class="ex" open><summary>📖 Penjelasan pajak ini</summary><div class="eg"><div><h4>Apa itu</h4>${e.a}</div><div><h4>Siapa yang terkait</h4>${e.s}</div><div><h4>Tarif &amp; cara hitung</h4>${e.f}</div><div><h4>Tenggat waktu</h4>${e.d}</div><div><h4>Dasar hukum</h4>${e.b}</div></div></details>`)}
+$("home").innerHTML="<h2>Pilih jenis pajak</h2><div class='cards'>"+Object.keys(E).map(id=>`<div class='card' onclick="document.querySelector('nav [data-i=${id}]').click()"><span>${E[id].i}</span><b>${E[id].t}</b><p>${E[id].r}</p></div>`).join("")+"</div><h2 style='margin-top:18px'>📅 Kalender kewajiban rutin</h2>"+tb([["Tgl 10 tiap bulan","Setor PPh 21, PPh 23, PPh 4(2)"],["Tgl 15 tiap bulan","Setor PPh 25 dan PPh Final UMKM"],["Tgl 20 tiap bulan","Lapor SPT Masa PPh 21/23/4(2)"],["Akhir bulan berikutnya","Setor dan lapor PPN"],["31 Maret","SPT Tahunan orang pribadi"],["30 April","SPT Tahunan badan"]])+"<div class='note'>Jika tanggal jatuh pada hari libur, batas waktu umumnya bergeser ke hari kerja berikutnya. Keterlambatan dikenai sanksi administrasi.</div>";
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let EM=[{nama:"Karyawan 1",status:"TK/0",gaji:10000000,tunjangan:1000000,premi:200000,iuran:300000,bonus:10000000,np:false}];
+const msg2=(t,ok)=>{const m=$("emm");m.textContent=t;m.style.color=ok?"var(--ac)":"#d33"};
+function h21(e){const k=KAT[e.status],bm=e.gaji+e.tunjangan+e.premi,tr=ter(k,bm),sur=e.np?1.2:1,pm=bm*tr/100*sur,bt=bm*12+e.bonus,bj=Math.min(bt*.05,6e6),pt=p17(bt-bj-e.iuran*12-PT[e.status]*1e6)[1]*sur;return{k,tr,pm,pt,des:pt-pm*11}}
+function rend(){
+ $("emt").innerHTML=EM.map((e,i)=>`<tr><td><input value="${esc(e.nama)}" oninput="EM[${i}].nama=this.value"></td><td><select onchange="EM[${i}].status=this.value;upd()">${Object.keys(PT).map(k=>`<option${k==e.status?" selected":""}>${k}</option>`).join("")}</select></td>`+["gaji","tunjangan","premi","iuran","bonus"].map(f=>`<td><input type="number" value="${e[f]}" oninput="EM[${i}].${f}=+this.value||0;upd()"></td>`).join("")+`<td><input type="checkbox"${e.np?" checked":""} onchange="EM[${i}].np=this.checked;upd()"></td><td id="ea${i}"></td><td id="eb${i}"></td><td id="ec${i}"></td><td><button class="bt d" onclick="EM.splice(${i},1);rend()">✕</button></td></tr>`).join("");
+ upd()}
+function upd(){let a=0,b=0,c=0;
+ EM.forEach((e,i)=>{const r=h21(e);$("ea"+i).textContent=r.k+" · "+pct(r.tr);$("eb"+i).textContent=rp(r.pm);$("ec"+i).textContent=rp(r.des);a+=r.pm;b+=r.des;c+=r.pt});
+ $("emsum").innerHTML=tb([["Jumlah karyawan",EM.length],["Total PPh 21 per bulan (Jan–Nov)",rp(a),1],["Total PPh 21 Masa Desember",rp(b)],["Total PPh 21 setahun",rp(c),1]])}
+function dl(nama,rows){
+ const f=x=>{x=String(x);if(/^[=+\-@]/.test(x)&&isNaN(x))x="'"+x;return'"'+x.replace(/"/g,'""')+'"'};
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeffsep=;\n"+rows.map(r=>r.map(f).join(";")).join("\n")],{type:"text/csv;charset=utf-8"}));a.download=nama;a.click()}
+function expEM(){dl("pph21-massal.csv",[["Nama","Status PTKP","Gaji/bln","Tunjangan/bln","Premi/bln","Iuran/bln","THR/Bonus","Tanpa NPWP","Kategori TER","Tarif TER %","PPh/bln","PPh Setahun","PPh Desember"]].concat(EM.map(e=>{const r=h21(e);return[e.nama,e.status,e.gaji,e.tunjangan,e.premi,e.iuran,e.bonus,e.np?"Ya":"Tidak",r.k,r.tr,Math.round(r.pm),Math.round(r.pt),Math.round(r.des)]})))}
+function impor(){const n=[];$("imp").value.split("\n").map(l=>l.trim()).filter(Boolean).forEach(l=>{const c=l.split(/[\t;,]/).map(x=>x.trim());if(isNaN(+c[2]))return;const st=(c[1]||"").toUpperCase();n.push({nama:c[0]||"-",status:PT[st]?st:"TK/0",gaji:+c[2]||0,tunjangan:+c[3]||0,premi:+c[4]||0,iuran:+c[5]||0,bonus:+c[6]||0,np:c[7]=="1"})});
+ if(n.length){EM=n;rend();msg2(n.length+" karyawan diimpor.",1)}else msg2("Tidak ada baris valid. Periksa format kolom.")}
+function simpanEM(){try{localStorage.setItem("emp21",JSON.stringify(EM));msg2("Tersimpan di browser ini ("+EM.length+" karyawan).",1)}catch(e){msg2("Browser tidak mengizinkan penyimpanan.")}}
+function muatEM(){try{const d=JSON.parse(localStorage.getItem("emp21")||"[]");if(!d.length)return msg2("Belum ada data tersimpan.");EM=d;rend();msg2("Dimuat: "+EM.length+" karyawan.",1)}catch(e){msg2("Gagal memuat data.")}}
+const KOL=["Nama","Status PTKP","Gaji pokok/bln","Tunjangan/bln","Premi pemberi kerja/bln","Iuran pensiun/bln","THR/bonus setahun","Tanpa NPWP (Ya/Tidak)"];
+function xl(){if(typeof XLSX=="undefined"){msg2("Pustaka Excel belum termuat (perlu internet saat membuka berkas). Sementara gunakan tombol CSV.");return false}return true}
+function fmtWS(ws){ws["!cols"]=Array(14).fill({wch:20});Object.keys(ws).forEach(k=>{if(k[0]!="!"&&ws[k].t=="n")ws[k].z="#,##0.##"})}
+function tplXL(){if(!xl())return;
+ const ws=XLSX.utils.aoa_to_sheet([KOL,["Budi","K/1",12000000,1500000,250000,300000,12000000,"Tidak"],["Siti","TK/0",9000000,500000,150000,200000,9000000,"Tidak"]]);fmtWS(ws);
+ const wk=XLSX.utils.aoa_to_sheet([["Status PTKP yang valid"],...Object.keys(PT).map(k=>[k]),[""],["Isi kolom Tanpa NPWP dengan Ya atau Tidak. Hapus 2 baris contoh sebelum mengisi data asli."]]);
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Karyawan");XLSX.utils.book_append_sheet(wb,wk,"Petunjuk");XLSX.writeFile(wb,"template-karyawan.xlsx")}
+function expXL(){if(!xl())return;
+ let a=0,b=0,c=0;
+ const rows=EM.map(e=>{const r=h21(e);a+=r.pm;b+=r.des;c+=r.pt;return[e.nama,e.status,e.gaji,e.tunjangan,e.premi,e.iuran,e.bonus,e.np?"Ya":"Tidak",r.k,r.tr,Math.round(r.pm),Math.round(r.pt),Math.round(r.des)]});
+ const ws=XLSX.utils.aoa_to_sheet([KOL.concat(["Kategori TER","Tarif TER %","PPh 21/bln (Jan-Nov)","PPh 21 setahun","PPh 21 Masa Desember"]).slice(0,8).concat(["Kategori TER","Tarif TER %","PPh 21/bln (Jan-Nov)","PPh 21 setahun","PPh 21 Masa Desember"]),...rows,[],["TOTAL","","","","","","","","","",Math.round(a),Math.round(c),Math.round(b)]]);fmtWS(ws);
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"PPh 21 Massal");XLSX.writeFile(wb,"pph21-massal.xlsx")}
+function fileXL(inp){const f=inp.files[0];if(!f||!xl())return;
+ const r=new FileReader();
+ r.onload=ev=>{try{
+  const wb=XLSX.read(ev.target.result,{type:"array"}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:""}),n=[];let bad=0;
+  rows.forEach(c=>{if(c[2]===""||isNaN(+c[2]))return;const st=String(c[1]).toUpperCase().trim();if(!PT[st])bad++;
+   n.push({nama:String(c[0]||"-"),status:PT[st]?st:"TK/0",gaji:+c[2]||0,tunjangan:+c[3]||0,premi:+c[4]||0,iuran:+c[5]||0,bonus:+c[6]||0,np:/^(ya|y|1|true)$/i.test(String(c[7]).trim())})});
+  if(n.length){EM=n;rend();msg2(n.length+" karyawan diimpor dari "+f.name+(bad?". "+bad+" baris berstatus PTKP tidak valid dan diganti TK/0, mohon periksa.":"."),!bad)}else msg2("Tidak ada baris valid. Gunakan template Excel.")
+ }catch(x){msg2("Gagal membaca file: "+x.message)}inp.value=""};
+ r.readAsArrayBuffer(f)}
+rend();
+calc();
+</script></body></html>
